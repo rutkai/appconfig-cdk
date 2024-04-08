@@ -1,0 +1,10 @@
+{
+  "db": {
+    "conn": "mysql://user:password@localhost/db",
+    "port": 3306
+  },
+  "redis": {
+    "conn": "redis://localhost:6379",
+    "port": 6379
+  }
+}
