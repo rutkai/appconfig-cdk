@@ -26,7 +26,7 @@ export class Lambda extends Construct {
                 }),
                 new iam.PolicyStatement({
                     actions: ['appconfig:GetConfiguration', 'appconfig:GetLatestConfiguration', 'appconfig:StartConfigurationSession'],
-                    resources: [props.application.applicationArn + '/*'],
+                    resources: [`${props.application.applicationArn}/environment/${props.env.environmentId}/configuration/*`],
                 }),
             ],
             layers: [lambda.LayerVersion.fromLayerVersionArn(this, 'AppConfigLayer', region.appConfigLambdaArn('2.0.181')!)],

@@ -3,7 +3,7 @@ const http = require('http');
 exports.handler = async (event) => {
     const res = await new Promise((resolve, reject) => {
         http.get(
-            "http://localhost:2772/" + process.env.AWS_APPCONFIG_CONFIG_PATH,
+            `http://localhost:${process.env.AWS_APPCONFIG_EXTENSION_HTTP_PORT}/${process.env.AWS_APPCONFIG_CONFIG_PATH}`,
             resolve
         );
     });
