@@ -9,15 +9,17 @@ export class InfraStack extends cdk.Stack {
         super(scope, id, props);
 
         const application = new Appconfig(this, 'AppConfigSample');
-        const lambda = new Lambda(this, 'LambdaSample', {
+        new Lambda(this, 'LambdaSample', {
             application: application.application,
             env: application.env,
             config: application.config,
+            secretConfig: application.secretConfig,
         });
-        const fargateContainer = new FargateContainer(this, 'FargateContainerSample', {
+        new FargateContainer(this, 'FargateContainerSample', {
             application: application.application,
             env: application.env,
             config: application.config,
+            secretConfig: application.secretConfig,
         });
     }
 }

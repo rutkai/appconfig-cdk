@@ -9,6 +9,7 @@ export type FargateContainerProps = {
     application: appconfig.Application;
     env: appconfig.Environment;
     config: appconfig.HostedConfiguration;
+    secretConfig: appconfig.SourcedConfiguration;
 };
 
 export class FargateContainer extends Construct {
@@ -59,6 +60,7 @@ export class FargateContainer extends Construct {
                 AWS_APPCONFIG_EXTENSION_POLL_INTERVAL_SECONDS: '45',
                 AWS_APPCONFIG_EXTENSION_POLL_TIMEOUT_MILLIS: '3000',
                 AWS_APPCONFIG_CONFIG_PATH: `applications/${props.application.applicationId}/environments/${props.env.environmentId}/configurations/${props.config.configurationProfileId}`,
+                AWS_APPCONFIG_SECRET_CONFIG_PATH: `applications/${props.application.applicationId}/environments/${props.env.environmentId}/configurations/${props.secretConfig.configurationProfileId}`,
             },
             logging: ecs.LogDrivers.awsLogs({
                 streamPrefix: 'AppconfigPoller',

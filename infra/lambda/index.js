@@ -1,24 +1,12 @@
-const http = require('http');
-
-exports.handler = async (event) => {
-    const res = await new Promise((resolve, reject) => {
-        http.get(
-            `http://localhost:${process.env.AWS_APPCONFIG_EXTENSION_HTTP_PORT}/${process.env.AWS_APPCONFIG_CONFIG_PATH}`,
-            resolve
-        );
-    });
-
-    let configData = await new Promise((resolve, reject) => {
-        let data = '';
-        res.on('data', chunk => data += chunk);
-        res.on('error', err => reject(err));
-        res.on('end', () => resolve(data));
-    });
-
-    const parsedConfigData = JSON.parse(configData);
+exports.handler = async () => {
+    const response = await fetch(`http://localhost:${process.env.AWS_APPCONFIG_EXTENSION_HTTP_PORT}/${process.env.AWS_APPCONFIG_CONFIG_PATH}`);
+    const secretResponse = await fetch(`http://localhost:${process.env.AWS_APPCONFIG_EXTENSION_HTTP_PORT}/${process.env.AWS_APPCONFIG_SECRET_CONFIG_PATH}`);
 
     return {
         statusCode: 200,
-        body: parsedConfigData,
+        body: {
+            configData: await response.json(),
+            secretConfigData: await secretResponse.json(),
+        },
     };
 };
